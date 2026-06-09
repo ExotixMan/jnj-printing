@@ -74,7 +74,7 @@ export default function LoginPage() {
   const [otp, setOtp] = useState("");
   const [otpTouched, setOtpTouched] = useState(false);
 
-  const otpError = otpTouched && !validateOtp(otp) ? "Enter the 6-digit code sent to your email." : "";
+  const otpError = otpTouched && !validateOtp(otp) ? "Enter the 8-digit code sent to your email." : "";
 
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");
@@ -192,7 +192,7 @@ export default function LoginPage() {
         setPassword("");
         setPasswordTouched(false);
         setLoginStep("otp");
-        setStatusMessage("We sent a 6-digit verification code to your email. Enter it to complete sign in.");
+        setStatusMessage("We sent a 8-digit verification code to your email. Enter it to complete sign in.");
         resetCaptcha();
         return;
       }
@@ -434,11 +434,6 @@ export default function LoginPage() {
                         <span aria-hidden="true">✕</span>{emailError}
                       </p>
                     )}
-                    {!emailError && emailTouched && validateEmail(email.trim()) && (
-                      <p className="mt-1.5 flex items-center gap-1.5 text-xs text-emerald-600">
-                        <span aria-hidden="true">✓</span>Looks good!
-                      </p>
-                    )}
                   </div>
 
                   {/* password */}
@@ -484,11 +479,6 @@ export default function LoginPage() {
                     {passwordError && (
                       <p id="password-error" role="alert" className="mt-1.5 flex items-center gap-1.5 text-xs text-red-600">
                         <span aria-hidden="true">✕</span>{passwordError}
-                      </p>
-                    )}
-                    {!passwordError && passwordTouched && password.length >= 6 && (
-                      <p className="mt-1.5 flex items-center gap-1.5 text-xs text-emerald-600">
-                        <span aria-hidden="true">✓</span>Password looks good!
                       </p>
                     )}
                   </div>
@@ -570,7 +560,7 @@ export default function LoginPage() {
                   noValidate
                 >
                   <div className="rounded-2xl bg-[var(--cream)] p-4 text-sm leading-6 text-[var(--muted)]">
-                    We sent a 6-digit code to <strong className="text-[var(--text)]">{pendingEmail}</strong>.
+                    We sent a 8-digit code to <strong className="text-[var(--text)]">{pendingEmail}</strong>.
                     {pendingRole ? ` This ${pendingRole} account must complete email verification every login.` : " This account must complete email verification every login."}
                   </div>
 
@@ -589,7 +579,7 @@ export default function LoginPage() {
                       value={otp}
                       onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 8))}
                       onBlur={() => setOtpTouched(true)}
-                      placeholder="123456"
+                      placeholder="12345678"
                       aria-invalid={!!otpError}
                       aria-describedby={otpError ? "otp-error" : undefined}
                       className={[
@@ -604,11 +594,6 @@ export default function LoginPage() {
                     {otpError && (
                       <p id="otp-error" role="alert" className="mt-1.5 flex items-center gap-1.5 text-xs text-red-600">
                         <span aria-hidden="true">✕</span>{otpError}
-                      </p>
-                    )}
-                    {!otpError && otpTouched && validateOtp(otp) && (
-                      <p className="mt-1.5 flex items-center gap-1.5 text-xs text-emerald-600">
-                        <span aria-hidden="true">✓</span>Code format looks good!
                       </p>
                     )}
                   </div>
